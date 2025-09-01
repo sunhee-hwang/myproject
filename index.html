@@ -1,27 +1,387 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>내 첫 GitHub Pages</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BeanCraft — 하루의 시작, 더 나은 한 잔</title>
+  <meta name="description" content="싱글 오리진 원두를 72시간 내 로스팅하여 배송합니다. 첫 구독 40% 할인으로 매일 더 신선한 커피를 만나보세요." />
+  <meta property="og:title" content="BeanCraft — 하루의 시작, 더 나은 한 잔" />
+  <meta property="og:description" content="싱글 오리진 원두를 72시간 내 로스팅하여 배송합니다. 첫 구독 40% 할인." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#6b3e2e" />
   <style>
+    :root {
+      --bg: #0f0d0a;           /* 배경(딥 초코) */
+      --bg-soft: #161310;
+      --cream: #f6efe6;        /* 본문 배경/텍스트 대비 */
+      --ink: #2a201b;          /* 진한 텍스트 */
+      --brown: #6b3e2e;        /* 브랜드 브라운 */
+      --tan: #c49a6c;          /* 포인트(골드/카라멜) */
+      --mint: #3fa57c;         /* 악센트(산미/신선함) */
+      --muted: #9a8e85;
+      --line: #2a241f;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+
+    /* Reset & base */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; }
     body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
-      background-color: #f5f5f5;
+      margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", Apple SD Gothic Neo, sans-serif;
+      color: var(--cream); background: var(--bg); line-height: 1.6;
     }
-    h1 {
-      color: #333;
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1120px, 92vw); margin: 0 auto; }
+    .section { padding: 80px 0; }
+
+    /* Header */
+    header {
+      position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(1.3) blur(6px);
+      background: linear-gradient(180deg, rgba(15,13,10,.9), rgba(15,13,10,.6)); border-bottom: 1px solid var(--line);
     }
-    p {
-      color: #666;
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: .5px; }
+    .brand-icon { width: 28px; height: 28px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #8a5a44, #3c1f16 60%, #120b08);
+      box-shadow: inset 0 0 12px rgba(0,0,0,.5), 0 0 0 1px #3a241b; position: relative; }
+    .brand-icon::after{ content:""; position:absolute; inset:6px; border-radius:50%; background: radial-gradient(circle at 30% 30%, #f0d7c4, #ab6f4a 70%, #3c1f16); mix-blend-mode: screen; opacity:.25 }
+    .nav a{ opacity:.9 }
+    .nav a:hover{ opacity:1 }
+    .nav-links { display: flex; gap: 22px; align-items: center; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px; border-radius: 999px; border: 1px solid transparent; cursor: pointer; font-weight: 600; transition: transform .06s ease, background .2s ease, border-color .2s ease; }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: linear-gradient(180deg, #7e4936, #5a2f22); border-color: #a16e57; box-shadow: var(--shadow); }
+    .btn-primary:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+    .btn-ghost { background: transparent; border-color: #3b2a23; }
+
+    /* Hero */
+    .hero { position: relative; padding: 90px 0 60px; overflow: hidden; }
+    .hero::before {
+      content: ""; position: absolute; inset: -20% -10% auto -10%; height: 120%; z-index: -1;
+      background: radial-gradient(1200px 600px at 20% 0%, rgba(196,154,108,.18), transparent 70%),
+                  radial-gradient(800px 500px at 90% 10%, rgba(63,165,124,.15), transparent 70%),
+                  radial-gradient(600px 400px at 60% 80%, rgba(126,73,54,.25), transparent 70%);
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
+    .eyebrow { color: var(--mint); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; font-size: .85rem; }
+    h1 { font-size: clamp(32px, 5.4vw, 60px); line-height: 1.1; margin: 10px 0 16px; }
+    .lead { color: #e8e0d6; font-size: clamp(16px, 2.2vw, 18px); max-width: 56ch; }
+    .hero-cta { margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .stats { display: flex; gap: 24px; margin-top: 24px; color: #d9cec2; font-size: .95rem; }
+    .stat { display: flex; align-items: center; gap: 8px; }
+
+    .cup {
+      width: 100%; aspect-ratio: 1 / 1; border-radius: var(--radius);
+      background: radial-gradient(circle at 60% 30%, #503128, #1a0f0b 60%);
+      box-shadow: inset 0 0 60px rgba(0,0,0,.6), 0 30px 60px rgba(0,0,0,.35);
+      position: relative; display: grid; place-items: center;
+    }
+    .cup svg{ width: 78%; height: auto; filter: drop-shadow(0 10px 20px rgba(0,0,0,.5)); }
+
+    /* Features */
+    .features { background: linear-gradient(180deg, var(--bg), var(--bg-soft)); }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .card { background: #15110f; border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+    .card h3 { margin: 10px 0 6px; }
+    .muted { color: var(--muted); font-size: .95rem; }
+
+    /* Products */
+    .products .grid-3 .card { padding: 18px; }
+    .badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: .78rem; background: rgba(196,154,108,.18); border:1px solid #42352b; color: #e9dccf; }
+    .price { font-weight: 800; font-size: 1.2rem; }
+
+    /* Steps */
+    .steps { background: #13100e; }
+    .steps ol { counter-reset: step; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .steps li { list-style: none; border: 1px dashed #3a2f29; border-radius: var(--radius); padding: 18px; position: relative; }
+    .steps li::before { counter-increment: step; content: counter(step); position: absolute; top: -12px; left: -12px; width: 36px; height: 36px; border-radius: 50%;
+      display:grid;place-items:center; background: #30251f; border:1px solid #43342c; font-weight: 800; }
+
+    /* Testimonials */
+    .testimonials { background: linear-gradient(180deg, #14100d, #110d0a); }
+    .quotes { display: grid; grid-template-columns: 1.2fr .8fr; gap: 20px; }
+    blockquote { margin: 0; padding: 20px; background: #18130f; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 10px 24px rgba(0,0,0,.35); }
+    blockquote footer { margin-top: 10px; color: var(--muted); font-size: .9rem; }
+
+    /* CTA banner */
+    .cta-banner { background: radial-gradient(1000px 400px at 10% 10%, rgba(63,165,124,.2), transparent 70%), #15110f; border: 1px solid var(--line); border-radius: calc(var(--radius) + 6px); padding: 24px; display: grid; grid-template-columns: 1.3fr .7fr; gap: 16px; align-items: center; box-shadow: var(--shadow); }
+    .input { width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid #3a2f29; background: #100c0a; color: var(--cream); }
+
+    /* FAQ */
+    details { background: #15110f; border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; }
+    details + details { margin-top: 10px; }
+    summary { cursor: pointer; font-weight: 700; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--line); background: #0d0b08; color: #b7aca3; }
+
+    /* Utilities */
+    .tag { font-size: .8rem; color: #d9cdbf; background: #2a201b; border: 1px solid #3a2f29; padding: 4px 10px; border-radius: 999px; }
+    .kicker { color: var(--muted); text-transform: uppercase; letter-spacing: .18em; font-weight: 800; font-size: .8rem; }
+    .section h2 { font-size: clamp(26px, 3.6vw, 40px); margin: 0 0 10px; }
+    .flex { display:flex; gap:10px; align-items:center }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .hero-grid{ grid-template-columns: 1fr; }
+      .quotes{ grid-template-columns: 1fr; }
+      .grid-3{ grid-template-columns: 1fr; }
+      .steps ol{ grid-template-columns: 1fr; }
+      .cta-banner{ grid-template-columns: 1fr; }
+      header .nav-links{ display: none; }
+    }
+
+    /* Motion preferences */
+    @media (prefers-reduced-motion: no-preference) {
+      .btn-primary:hover { filter: brightness(1.08); }
+      .cup{ animation: float 7s ease-in-out infinite; }
+      @keyframes float { 0%{ transform: translateY(0) } 50%{ transform: translateY(-8px) } 100%{ transform: translateY(0) } }
     }
   </style>
 </head>
 <body>
-  <h1>환영합니다!</h1>
-  <p>이 페이지는 GitHub Pages와 연결된 도메인에서 호스팅되고 있습니다.</p>
-  <p>index.html 파일만 있으면 이렇게 웹사이트를 띄울 수 있어요 🎉</p>
+  <!-- Header -->
+  <header aria-label="주요 탐색">
+    <div class="container nav" role="navigation">
+      <div class="brand"><span class="brand-icon" aria-hidden="true"></span>BeanCraft</div>
+      <nav class="nav-links">
+        <a href="#products">원두</a>
+        <a href="#why">왜 BeanCraft?</a>
+        <a href="#faq">FAQ</a>
+        <a class="btn btn-ghost" href="#subscribe" aria-label="구독 혜택 보기">구독 혜택</a>
+        <a class="btn btn-primary" href="#subscribe" aria-label="지금 구독하기">지금 구독하기</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero section">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Single Origin · Fresh Roast</span>
+          <h1>하루의 시작, <br/>더 나은 한 잔</h1>
+          <p class="lead">신선함이 맛을 결정합니다. BeanCraft는 수확 시기 선별 원두를 <strong>72시간 내 로스팅</strong>해 바로 발송합니다. 첫 구독은 <strong>40% 할인</strong>으로 가볍게 시작하세요.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#subscribe">지금 구독하기</a>
+            <a class="btn btn-ghost" href="#products">원두 살펴보기</a>
+          </div>
+          <div class="stats" aria-label="신뢰 지표">
+            <div class="stat">☕ <span>누적 <strong>120,000+</strong> 잔</span></div>
+            <div class="stat">🚚 <span><strong>무료 익일 배송</strong></span></div>
+            <div class="stat">🔒 <span><strong>30일 환불 보장</strong></span></div>
+          </div>
+        </div>
+        <div class="cup" aria-hidden="true">
+          <!-- Inline SVG: 커피 컵 일러스트 -->
+          <svg viewBox="0 0 512 512" role="img" aria-label="커피 컵">
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#f6efe6"/>
+                <stop offset="1" stop-color="#d9c1a5"/>
+              </linearGradient>
+              <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#6b3e2e"/>
+                <stop offset="1" stop-color="#3a221a"/>
+              </linearGradient>
+            </defs>
+            <g transform="translate(0,10)">
+              <path d="M80,160 h272 a24,24 0 0 1 24,24 v96 a96,96 0 0 1 -96,96 H152 a96,96 0 0 1 -96,-96 v-96 a24,24 0 0 1 24,-24z" fill="url(#g1)"/>
+              <path d="M376,192 h50 a50,50 0 0 1 0,100 h-50 v-30 h38 a20,20 0 0 0 0,-40 h-38z" fill="url(#g1)"/>
+              <rect x="72" y="144" width="304" height="28" rx="14" fill="#fff" opacity=".25"/>
+              <rect x="92" y="212" width="264" height="120" rx="16" fill="url(#g2)"/>
+              <ellipse cx="224" cy="330" rx="140" ry="18" fill="#000" opacity=".35"/>
+              <!-- 김(스팀) -->
+              <path d="M200,120 q-18,-24 8,-40 q26,-16 8,-40" stroke="#e6d6c7" stroke-width="6" fill="none" stroke-linecap="round" opacity=".8"/>
+              <path d="M250,120 q-18,-24 8,-40 q26,-16 8,-40" stroke="#e6d6c7" stroke-width="6" fill="none" stroke-linecap="round" opacity=".6"/>
+              <path d="M300,120 q-18,-24 8,-40 q26,-16 8,-40" stroke="#e6d6c7" stroke-width="6" fill="none" stroke-linecap="round" opacity=".4"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="why" class="features section">
+      <div class="container">
+        <div class="kicker">Why BeanCraft</div>
+        <h2>신선함을 설계한 공급망</h2>
+        <p class="muted">수확–운송–로스팅–배송 전 과정에서 신선도를 잃지 않도록 설계했습니다.</p>
+        <div class="grid-3" role="list">
+          <article class="card" role="listitem">
+            <span class="badge">싱글 오리진</span>
+            <h3>산지 직송, 트레이서블</h3>
+            <p class="muted">농장·고도·품종까지 투명하게 공개합니다. 컵 노트가 명확한 단일 산지 원두만 취급합니다.</p>
+          </article>
+          <article class="card" role="listitem">
+            <span class="badge">72시간 로스팅</span>
+            <h3>주문 후 배치 로스팅</h3>
+            <p class="muted">주문이 들어오면 로스터가 배치 로스팅을 진행하고, <strong>최대 72시간 내</strong> 출고합니다.</p>
+          </article>
+          <article class="card" role="listitem">
+            <span class="badge">탄소중립 포장</span>
+            <h3>신선함과 지속가능성</h3>
+            <p class="muted">밸브 포장과 재활용 소재를 사용합니다. 배송 전 전체 CO₂를 상쇄합니다.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Products -->
+    <section id="products" class="products section">
+      <div class="container">
+        <div class="kicker">Our Beans</div>
+        <h2>가장 사랑받는 세 가지 선택</h2>
+        <div class="grid-3">
+          <article class="card">
+            <img src="https://images.unsplash.com/photo-1512568400610-62da28bc8a13?q=80&w=1200&auto=format&fit=crop" alt="에티오피아 라이트 로스트 원두"/>
+            <div class="flex" style="justify-content: space-between; margin-top: 8px;">
+              <h3>에티오피아 라이트</h3>
+              <span class="price">₩13,900</span>
+            </div>
+            <p class="muted">플로럴 · 시트러스 · 밝은 산미</p>
+            <div class="hero-cta"><a href="#subscribe" class="btn btn-primary" aria-label="에티오피아 라이트 구독하기">구독하기</a></div>
+          </article>
+          <article class="card">
+            <img src="https://images.unsplash.com/photo-1509785307050-d4066910ec1e?q=80&w=1200&auto=format&fit=crop" alt="콜롬비아 미디엄 로스트 원두"/>
+            <div class="flex" style="justify-content: space-between; margin-top: 8px;">
+              <h3>콜롬비아 미디엄</h3>
+              <span class="price">₩14,900</span>
+            </div>
+            <p class="muted">카라멜 · 넛티 · 밸런스 좋은 바디</p>
+            <div class="hero-cta"><a href="#subscribe" class="btn btn-primary" aria-label="콜롬비아 미디엄 구독하기">구독하기</a></div>
+          </article>
+          <article class="card">
+            <img src="https://images.unsplash.com/photo-1445077100181-a33e9ac94db0?q=80&w=1200&auto=format&fit=crop" alt="브라질 다크 로스트 원두"/>
+            <div class="flex" style="justify-content: space-between; margin-top: 8px;">
+              <h3>브라질 다크</h3>
+              <span class="price">₩12,900</span>
+            </div>
+            <p class="muted">다크 초콜릿 · 스모키 · 긴 잔향</p>
+            <div class="hero-cta"><a href="#subscribe" class="btn btn-primary" aria-label="브라질 다크 구독하기">구독하기</a></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Steps -->
+    <section class="steps section">
+      <div class="container">
+        <div class="kicker">How it works</div>
+        <h2>3단계로 끝나는 신선 구독</h2>
+        <ol>
+          <li>
+            <h3>1) 취향 선택</h3>
+            <p class="muted">산미·바디·향미 선호를 고르면 맞춤 추천을 드립니다.</p>
+          </li>
+          <li>
+            <h3>2) 로스팅 & 포장</h3>
+            <p class="muted">주문 직후 배치 로스팅, 가스 밸브 포장으로 향을 지킵니다.</p>
+          </li>
+          <li>
+            <h3>3) 익일 배송</h3>
+            <p class="muted">서울/수도권 기준 다음날 도착. 원하는 주기로 자동 배송합니다.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials section">
+      <div class="container">
+        <div class="kicker">Loved by brewers</div>
+        <h2>고객이 증명한 맛의 차이</h2>
+        <div class="quotes">
+          <blockquote>
+            <p>“첫 배송을 받고 바로 라떼를 내려 마셨는데, 고소함과 향이 확실히 다릅니다. 매주 집에서 카페 퀄리티를 누립니다.”</p>
+            <footer>— 김유진 / 재택근무자</footer>
+          </blockquote>
+          <blockquote>
+            <p>“로스팅 날짜가 박스에 찍혀 있어서 신뢰가 가요. 산미가 살아있는 에티오피아가 특히 좋았습니다.”</p>
+            <footer>— 박민호 / 홈바리스타</footer>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Banner / Subscribe -->
+    <section id="subscribe" class="section">
+      <div class="container">
+        <div class="cta-banner" role="form" aria-label="구독 폼">
+          <div>
+            <div class="kicker">40% OFF 첫 구독</div>
+            <h2 style="margin:6px 0 8px">BEAN40 쿠폰으로 가볍게 시작하세요</h2>
+            <p class="muted">이메일을 남기면 할인 코드와 맞춤 추천을 보내드립니다. 신용카드 정보는 필요하지 않습니다.</p>
+          </div>
+          <form onsubmit="return fakeSubmit(event)" aria-label="구독 입력">
+            <label class="visually-hidden" for="email">이메일</label>
+            <input class="input" id="email" type="email" name="email" placeholder="이메일 주소" required aria-required="true"/>
+            <div class="hero-cta" style="margin-top:12px">
+              <button class="btn btn-primary" type="submit">할인 코드 받기</button>
+              <span class="tag" aria-live="polite" id="msg" style="display:none">전송 중…</span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section">
+      <div class="container">
+        <div class="kicker">FAQ</div>
+        <h2>자주 묻는 질문</h2>
+        <details>
+          <summary>배송은 얼마나 걸리나요?</summary>
+          <p class="muted">서울/수도권은 주문 다음날 도착, 그 외 지역은 1~2영업일 소요됩니다.</p>
+        </details>
+        <details>
+          <summary>입맛에 맞지 않으면 환불되나요?</summary>
+          <p class="muted">첫 주문은 30일 무조건 환불 보장 정책이 적용됩니다.</p>
+        </details>
+        <details>
+          <summary>분쇄까지 요청할 수 있나요?</summary>
+          <p class="muted">가능합니다. 드립/프렌치프레스/에스프레소 등 옵션을 선택해 주세요.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="section" role="contentinfo">
+    <div class="container" style="display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center">
+      <div class="muted">© 2025 BeanCraft Co. 모든 권리 보유.</div>
+      <div class="flex" style="gap:14px">
+        <a class="muted" href="#">이용약관</a>
+        <a class="muted" href="#">개인정보처리방침</a>
+        <a class="muted" href="#">고객센터</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // 접근성: 시각적 숨김 클래스(레이블용)
+    const style = document.createElement('style');
+    style.innerHTML = `.visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}`;
+    document.head.appendChild(style);
+
+    // 폼: 데모용 전송 처리
+    function fakeSubmit(e){
+      e.preventDefault();
+      const m = document.getElementById('msg');
+      m.style.display = 'inline-block';
+      setTimeout(()=>{ m.textContent='완료! 이메일함을 확인해 주세요.'; }, 900);
+      return false;
+    }
+
+    // 부드러운 스크롤 (브라우저 지원 시)
+    if ('scrollBehavior' in document.documentElement.style){
+      document.querySelectorAll('a[href^="#"]').forEach(a=>{
+        a.addEventListener('click', (e)=>{
+          const id = a.getAttribute('href');
+          if(id.length>1){ e.preventDefault(); document.querySelector(id)?.scrollIntoView({behavior:'smooth'}); }
+        });
+      });
+    }
+  </script>
 </body>
 </html>
